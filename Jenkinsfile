@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Push Image') {
             steps {
-			    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'hardcore13', usernameVariable: 'dolbilov@gmail.com')]) {
+			    withCredentials([usernamePassword(credentialsId: 'docker_hub', passwordVariable: 'hardcore13', usernameVariable: 'dolbilov@gmail.com')]) {
 			        sh "docker login --username=${user} --password=${pass}"
 			        sh "docker push heretic13/selenium-docker:latest"
 			    }

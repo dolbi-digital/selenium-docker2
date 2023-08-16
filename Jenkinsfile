@@ -1,5 +1,4 @@
 pipeline {
-    // master executor should be set to 0
     agent any
     tools {
           maven 'maven3'
@@ -25,4 +24,3 @@ pipeline {
             }
         }
     }
-}

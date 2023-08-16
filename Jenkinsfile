@@ -1,26 +1,23 @@
 pipeline {
+    // master executor should be set to 0
     agent any
     stages {
         stage('Build Jar') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh "mvn clean package -DskipTests"
             }
         }
         stage('Build Image') {
             steps {
-                script {
-                	app = docker.build("heretic13/selenium-docker")
-                }
+                sh "docker build -t='heretic13/selenium-docker' ."
             }
         }
         stage('Push Image') {
             steps {
-                script {
-			        docker.withRegistry('https://registry.hub.docker.com', 'dolbilov@gmail.com') {
-			        	app.push("${BUILD_NUMBER}")
-			            app.push("latest")
-			        }
-                }
+			    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'hardcore13', usernameVariable: 'dolbilov@gmail.com')]) {
+			        sh "docker login --username=${user} --password=${pass}"
+			        sh "docker push heretic13/selenium-docker:latest"
+			    }
             }
         }
     }

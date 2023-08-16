@@ -9,14 +9,14 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                	app = docker.build("heretic13/docker")
+                	app = docker.build("heretic13/selenium-docker")
                 }
             }
         }
         stage('Push Image') {
             steps {
                 script {
-			        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+			        docker.withRegistry('https://registry.hub.docker.com', 'dolbilov@gmail.com') {
 			        	app.push("${BUILD_NUMBER}")
 			            app.push("latest")
 			        }
